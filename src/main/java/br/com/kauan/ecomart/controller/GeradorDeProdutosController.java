@@ -1,4 +1,4 @@
-package br.com.kauan.ecomart;
+package br.com.kauan.ecomart.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.GetMapping;
