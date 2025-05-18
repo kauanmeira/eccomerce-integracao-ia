@@ -1,7 +1,6 @@
 package br.com.kauan.ecomart.controller;
 
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.prompt.ChatOptions;
+import br.com.kauan.ecomart.domain.chatclient.ChatClientService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/categorizador")
 public class CategorizadorDeProdutosController {
 
-    private final ChatClient chatClient;
+    private final ChatClientService chatService;
 
-    public CategorizadorDeProdutosController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+    public CategorizadorDeProdutosController(ChatClientService chatService) {
+        this.chatService = chatService;
     }
 
     @GetMapping
@@ -34,14 +33,7 @@ public class CategorizadorDeProdutosController {
                 Resposta: Esportes
                 """;
 
-        return this.chatClient.prompt()
-                .system(system)
-                .user(produto)
-                .options(ChatOptions.builder()
-                        .temperature(0.85)
-                        .build())
-                .call()
-                .content();
+        return chatService.chat(system, produto);
     }
 
 }
